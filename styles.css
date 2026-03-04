@@ -936,11 +936,17 @@ img {
         overflow: visible;
         height: auto;
     }
+    .nav-container {
+        padding: 0 12px;
+    }
+    .logo-img {
+        height: 4rem;
+    }
     .nav-links {
         display: none;
         flex-direction: column;
         position: absolute;
-        top: 70px; /* Adjust based on navbar height */
+        top: 100%;
         left: 0;
         width: 100%;
         background-color: rgba(20,10,10,0.95);
@@ -959,13 +965,12 @@ img {
     }
 
     .hero-content h1 {
-        font-size: 2.5rem;
+        font-size: 2.2rem;
     }
 
     .two-column, .contact-wrapper {
         grid-template-columns: 1fr;
     }
-
 
     .newsletter-form {
         flex-direction: column;
@@ -978,10 +983,55 @@ img {
     
     .modal-image img {
         border-radius: 10px 10px 0 0;
-        height: 250px;
+        height: 220px;
     }
     
     .modal-info {
         padding: 20px;
+    }
+    .section {
+        padding: 60px 0;
+    }
+    .filters-container {
+        padding: 16px;
+    }
+    .product-image-container {
+        height: 240px;
+    }
+}
+
+@media (max-width: 480px) {
+    .logo-img {
+        height: 3.2rem;
+    }
+    .section {
+        padding: 48px 0;
+    }
+    .hero-content h1 {
+        font-size: 1.8rem;
+    }
+    .search-box {
+        flex-direction: column;
+        gap: 10px;
+        max-width: 100%;
+    }
+    .search-box input {
+        border-radius: 8px;
+    }
+    .search-box button {
+        border-radius: 8px;
+        width: 100%;
+    }
+    .filter-controls {
+        gap: 10px;
+    }
+    .filter-controls select {
+        width: 100%;
+    }
+    .product-image-container {
+        height: 200px;
+    }
+    .modal-info {
+        padding: 16px;
     }
 }
