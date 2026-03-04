@@ -414,7 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
             e.preventDefault();
             const emailInput = newsletterForm.querySelector('input[type="email"]');
             const email = emailInput.value.trim();
-            const valid = /^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$/.test(email.toLowerCase());
+            const valid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.toLowerCase());
             if (!valid) {
                 alert(currentLang === 'en' ? 'Please enter a valid email.' : 'Ange en giltig e-post.');
                 return;
