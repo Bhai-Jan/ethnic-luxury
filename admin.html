@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ethnic Luxury Admin</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    .admin-wrapper { max-width: 1000px; margin: 40px auto; padding: 20px; }
+    .admin-card { background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 20px; margin-bottom: 20px; }
+    .admin-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .admin-grid > div { background: #fafafa; padding: 15px; border-radius: 8px; border: 1px solid #eee; }
+    .admin-table { width: 100%; border-collapse: collapse; }
+    .admin-table th, .admin-table td { padding: 8px 10px; border-bottom: 1px solid #eee; text-align: left; }
+    .admin-actions button { margin-right: 8px; }
+    .hidden { display: none; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .form-row label { display: block; font-weight: 600; margin-bottom: 6px; }
+    .form-row input, .form-row select, .form-row textarea { width: 100%; padding: 8px; border: 1px solid #ddd; border-radius: 6px; }
+    .badge { background: #eef; color: #224; padding: 2px 6px; border-radius: 4px; font-size: 12px; }
+    .topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; background: #fff; border: 1px solid #eee; border-radius: 8px; padding: 12px 16px; }
+    .admin-wrapper { color: #222; }
+    .admin-wrapper h1, .admin-wrapper h2, .admin-wrapper h3, .admin-wrapper h4, .admin-wrapper h5, .admin-wrapper h6 { color: #111; }
+    .admin-wrapper .admin-table th, .admin-wrapper .admin-table td { color: #222; }
+    .admin-wrapper label { color: #222; }
+    .admin-wrapper input, .admin-wrapper select, .admin-wrapper textarea { color: #222; background-color: #fff; }
+    .admin-wrapper .admin-table a { color: #0b5ed7; text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <div class="admin-wrapper">
+    <div class="topbar">
+      <h1>Admin Panel</h1>
+      <div>
+        <a href="./" class="btn btn-secondary">← Back to site</a>
+        <button id="logoutBtn" class="btn btn-secondary hidden">Logout</button>
+      </div>
+    </div>
+
+    <div id="loginCard" class="admin-card">
+      <h2>Login</h2>
+      <div class="form-row">
+        <div>
+          <label for="adminPassword">Admin Password</label>
+          <input type="password" id="adminPassword" placeholder="Enter admin password" />
+        </div>
+        <div style="align-self: end;">
+          <button id="loginBtn" class="btn btn-primary">Login</button>
+        </div>
+      </div>
+      <p style="margin-top:8px;color:#666;">After login, a token is stored locally and used for API requests.</p>
+    </div>
+
+    <div id="adminArea" class="hidden">
+      <div class="admin-card">
+        <h2>Products</h2>
+        <table class="admin-table" id="productsTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Type</th>
+              <th>Region</th>
+              <th>Price</th>
+              <th>Image</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+      </div>
+
+      <div class="admin-card">
+        <h2 id="formTitle">Add Product</h2>
+        <form id="productForm">
+          <input type="hidden" id="editId" />
+          <div class="form-row">
+            <div>
+              <label for="name">Name</label>
+              <input id="name" required />
+            </div>
+            <div>
+              <label for="price">Price (SEK)</label>
+              <input id="price" type="number" min="0" step="1" required />
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="type">Type</label>
+              <select id="type" required>
+                <option value="Sari">Sari</option>
+                <option value="Kaftan">Kaftan</option>
+                <option value="Dashiki">Dashiki</option>
+                <option value="Abaya">Abaya</option>
+                <option value="Kurta">Kurta</option>
+                <option value="Dress">Dress</option>
+                <option value="Accessory">Accessory</option>
+                <option value="Other">Other</option>
+              </select>
+            </div>
+            <div>
+              <label for="region">Region</label>
+              <select id="region" required>
+                <option value="Pakistan">Pakistan</option>
+                <option value="Afghanistan">Afghanistan</option>
+                <option value="Middle East">Middle East</option>
+                <option value="Africa">Africa</option>
+                <option value="India">India</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-row">
+            <div>
+              <label for="image">Image File</label>
+              <input id="image" type="file" accept="image/*" />
+            </div>
+            <div>
+              <label for="image_url">Or Image URL</label>
+              <input id="image_url" placeholder="https://..." />
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div>
+              <label for="description">Description</label>
+              <textarea id="description" rows="4" required></textarea>
+            </div>
+          </div>
+          <div style="margin-top:12px;">
+            <button class="btn btn-primary" id="saveBtn" type="submit">Save</button>
+            <button class="btn btn-secondary" id="cancelEditBtn" type="button" style="display:none;">Cancel Edit</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <h2>FAQs</h2>
+        <table class="admin-table" id="faqsTable">
+          <thead>
+            <tr><th>Question</th><th>Answer</th><th>Actions</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <h3>Add / Edit FAQ</h3>
+        <form id="faqForm">
+          <input type="hidden" id="faqId" />
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div>
+              <label for="faqQuestion">Question</label>
+              <input id="faqQuestion" required />
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div>
+              <label for="faqAnswer">Answer</label>
+              <textarea id="faqAnswer" rows="3" required></textarea>
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Save FAQ</button>
+          <button class="btn btn-secondary" type="button" id="faqCancelBtn" style="display:none;">Cancel</button>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <h2>Testimonials</h2>
+        <table class="admin-table" id="testimonialsTable">
+          <thead>
+            <tr><th>Quote</th><th>Cite</th><th>Actions</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <h3>Add / Edit Testimonial</h3>
+        <form id="testimonialForm">
+          <input type="hidden" id="testiId" />
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div>
+              <label for="testiQuote">Quote</label>
+              <textarea id="testiQuote" rows="3" required></textarea>
+            </div>
+          </div>
+          <div class="form-row" style="grid-template-columns:1fr;">
+            <div>
+              <label for="testiCite">Cite</label>
+              <input id="testiCite" required />
+            </div>
+          </div>
+          <button class="btn btn-primary" type="submit">Save Testimonial</button>
+          <button class="btn btn-secondary" type="button" id="testiCancelBtn" style="display:none;">Cancel</button>
+        </form>
+      </div>
+
+      <div class="admin-card">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <h2>Members</h2>
+          <button id="exportMembersBtn" class="btn btn-secondary">Export CSV</button>
+        </div>
+        <table class="admin-table" id="membersTable">
+          <thead>
+            <tr><th>Email</th><th>Signup Date</th><th>Actions</th></tr>
+          </thead>
+          <tbody></tbody>
+        </table>
+        <h3>Edit Member</h3>
+        <form id="memberForm">
+          <input type="hidden" id="memberId" />
+          <div class="form-row">
+            <div>
+              <label for="memberEmail">Email</label>
+              <input id="memberEmail" type="email" required />
+            </div>
+            <div style="align-self:end;">
+              <button class="btn btn-primary" type="submit">Save Member</button>
+              <button class="btn btn-secondary" id="memberCancelBtn" type="button" style="display:none;">Cancel</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const loginCard = document.getElementById('loginCard');
+    const adminArea = document.getElementById('adminArea');
+    const loginBtn = document.getElementById('loginBtn');
+    const adminPassword = document.getElementById('adminPassword');
+    const logoutBtn = document.getElementById('logoutBtn');
+    const productsTableBody = document.querySelector('#productsTable tbody');
+    const formTitle = document.getElementById('formTitle');
+    const productForm = document.getElementById('productForm');
+    const editId = document.getElementById('editId');
+    const nameEl = document.getElementById('name');
+    const priceEl = document.getElementById('price');
+    const typeEl = document.getElementById('type');
+    const regionEl = document.getElementById('region');
+    const imageEl = document.getElementById('image');
+    const imageUrlEl = document.getElementById('image_url');
+    const descriptionEl = document.getElementById('description');
+    const cancelEditBtn = document.getElementById('cancelEditBtn');
+    // FAQ
+    const faqsTableBody = document.querySelector('#faqsTable tbody');
+    const faqForm = document.getElementById('faqForm');
+    const faqId = document.getElementById('faqId');
+    const faqQuestion = document.getElementById('faqQuestion');
+    const faqAnswer = document.getElementById('faqAnswer');
+    const faqCancelBtn = document.getElementById('faqCancelBtn');
+    // Testimonials
+    const testimonialsTableBody = document.querySelector('#testimonialsTable tbody');
+    const testimonialForm = document.getElementById('testimonialForm');
+    const testiId = document.getElementById('testiId');
+    const testiQuote = document.getElementById('testiQuote');
+    const testiCite = document.getElementById('testiCite');
+    const testiCancelBtn = document.getElementById('testiCancelBtn');
+    // Members
+    const membersTableBody = document.querySelector('#membersTable tbody');
+    const memberForm = document.getElementById('memberForm');
+    const memberId = document.getElementById('memberId');
+    const memberEmail = document.getElementById('memberEmail');
+    const exportMembersBtn = document.getElementById('exportMembersBtn');
+    const memberCancelBtn = document.getElementById('memberCancelBtn');
+
+    function getToken() { return localStorage.getItem('admin_token'); }
+    function setToken(t) { localStorage.setItem('admin_token', t); }
+    function clearToken() { localStorage.removeItem('admin_token'); }
+
+    function setLoggedInUI(isLoggedIn) {
+      loginCard.classList.toggle('hidden', isLoggedIn);
+      adminArea.classList.toggle('hidden', !isLoggedIn);
+      logoutBtn.classList.toggle('hidden', !isLoggedIn);
+    }
+
+    async function login() {
+      const resp = await fetch('/api/login', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ password: adminPassword.value })
+      });
+      if (!resp.ok) {
+        alert('Login failed');
+        return;
+      }
+      const data = await resp.json();
+      setToken(data.token);
+      setLoggedInUI(true);
+      adminPassword.value = '';
+      await loadProducts();
+    }
+
+    async function loadProducts() {
+      const resp = await fetch('/api/products');
+      const items = await resp.json();
+      productsTableBody.innerHTML = '';
+      items.forEach(p => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${p.name}</td>
+          <td><span class="badge">${p.type}</span></td>
+          <td>${p.region}</td>
+          <td>${p.price} SEK</td>
+          <td>${p.image_url ? `<a href="${p.image_url}" target="_blank">View</a>` : ''}</td>
+          <td class="admin-actions">
+            <button class="btn btn-secondary" data-action="edit" data-id="${p.id}">Edit</button>
+            <button class="btn btn-secondary" data-action="delete" data-id="${p.id}">Delete</button>
+          </td>
+        `;
+        productsTableBody.appendChild(tr);
+      });
+    }
+
+    function startEdit(p) {
+      editId.value = p.id;
+      nameEl.value = p.name;
+      priceEl.value = p.price;
+      typeEl.value = p.type;
+      regionEl.value = p.region;
+      imageEl.value = '';
+      imageUrlEl.value = p.image_url || '';
+      descriptionEl.value = p.description;
+      formTitle.textContent = 'Edit Product';
+      cancelEditBtn.style.display = 'inline-block';
+      window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+    }
+
+    function resetForm() {
+      editId.value = '';
+      productForm.reset();
+      formTitle.textContent = 'Add Product';
+      cancelEditBtn.style.display = 'none';
+    }
+
+    async function onTableClick(e) {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      const id = btn.getAttribute('data-id');
+      if (btn.getAttribute('data-action') === 'edit') {
+        const resp = await fetch(`/api/products/${id}`);
+        if (!resp.ok) return alert('Failed to load product');
+        const p = await resp.json();
+        startEdit(p);
+      } else if (btn.getAttribute('data-action') === 'delete') {
+        if (!confirm('Delete this product?')) return;
+        const resp = await fetch(`/api/products/${id}`, {
+          method: 'DELETE',
+          headers: { 'x-admin-token': getToken() }
+        });
+        if (!resp.ok) return alert('Delete failed');
+        await loadProducts();
+      }
+    }
+
+    async function onSave(e) {
+      e.preventDefault();
+      const fd = new FormData();
+      fd.append('name', nameEl.value);
+      fd.append('price', priceEl.value);
+      fd.append('type', typeEl.value);
+      fd.append('region', regionEl.value);
+      fd.append('description', descriptionEl.value);
+      if (imageEl.files[0]) fd.append('image', imageEl.files[0]);
+      if (imageUrlEl.value) fd.append('image_url', imageUrlEl.value);
+
+      const token = getToken();
+      const isEdit = !!editId.value;
+      const url = isEdit ? `/api/products/${editId.value}` : '/api/products';
+      const method = isEdit ? 'PUT' : 'POST';
+      const resp = await fetch(url, { method, headers: { 'x-admin-token': token }, body: fd });
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        alert('Save failed: ' + (err.error || resp.statusText));
+        return;
+      }
+      await loadProducts();
+      resetForm();
+    }
+
+    // ----- FAQs -----
+    async function loadFaqs() {
+      const resp = await fetch('/api/faqs');
+      const items = await resp.json();
+      faqsTableBody.innerHTML = '';
+      items.forEach(f => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${f.question}</td>
+          <td>${f.answer}</td>
+          <td class="admin-actions">
+            <button class="btn btn-secondary" data-faq-edit="${f.id}">Edit</button>
+            <button class="btn btn-secondary" data-faq-del="${f.id}">Delete</button>
+          </td>`;
+        faqsTableBody.appendChild(tr);
+      });
+    }
+
+    faqsTableBody.addEventListener('click', async (e) => {
+      const editBtn = e.target.closest('button[data-faq-edit]');
+      const delBtn = e.target.closest('button[data-faq-del]');
+      if (editBtn) {
+        const id = editBtn.getAttribute('data-faq-edit');
+        const list = await (await fetch('/api/faqs')).json();
+        const item = list.find(x => x.id === id);
+        if (!item) return;
+        faqId.value = item.id;
+        faqQuestion.value = item.question;
+        faqAnswer.value = item.answer;
+        faqCancelBtn.style.display = 'inline-block';
+      } else if (delBtn) {
+        const id = delBtn.getAttribute('data-faq-del');
+        if (!confirm('Delete this FAQ?')) return;
+        const resp = await fetch(`/api/faqs/${id}`, { method: 'DELETE', headers: { 'x-admin-token': getToken() } });
+        if (!resp.ok) return alert('Delete failed');
+        await loadFaqs();
+      }
+    });
+
+    faqForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const body = { question: faqQuestion.value, answer: faqAnswer.value };
+      const isEdit = !!faqId.value;
+      const url = isEdit ? `/api/faqs/${faqId.value}` : '/api/faqs';
+      const method = isEdit ? 'PUT' : 'POST';
+      const resp = await fetch(url, { method, headers: { 'Content-Type': 'application/json', 'x-admin-token': getToken() }, body: JSON.stringify(body) });
+      if (!resp.ok) return alert('Save failed');
+      faqForm.reset();
+      faqId.value = '';
+      faqCancelBtn.style.display = 'none';
+      await loadFaqs();
+    });
+    faqCancelBtn.addEventListener('click', () => { faqForm.reset(); faqId.value=''; faqCancelBtn.style.display='none'; });
+
+    // ----- Testimonials -----
+    async function loadTestimonialsAdmin() {
+      const resp = await fetch('/api/testimonials');
+      const items = await resp.json();
+      testimonialsTableBody.innerHTML = '';
+      items.forEach(t => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${t.quote}</td>
+          <td>${t.cite}</td>
+          <td class="admin-actions">
+            <button class="btn btn-secondary" data-testi-edit="${t.id}">Edit</button>
+            <button class="btn btn-secondary" data-testi-del="${t.id}">Delete</button>
+          </td>`;
+        testimonialsTableBody.appendChild(tr);
+      });
+    }
+
+    testimonialsTableBody.addEventListener('click', async (e) => {
+      const editBtn = e.target.closest('button[data-testi-edit]');
+      const delBtn = e.target.closest('button[data-testi-del]');
+      if (editBtn) {
+        const id = editBtn.getAttribute('data-testi-edit');
+        const list = await (await fetch('/api/testimonials')).json();
+        const item = list.find(x => x.id === id);
+        if (!item) return;
+        testiId.value = item.id;
+        testiQuote.value = item.quote;
+        testiCite.value = item.cite;
+        testiCancelBtn.style.display = 'inline-block';
+      } else if (delBtn) {
+        const id = delBtn.getAttribute('data-testi-del');
+        if (!confirm('Delete this testimonial?')) return;
+        const resp = await fetch(`/api/testimonials/${id}`, { method: 'DELETE', headers: { 'x-admin-token': getToken() } });
+        if (!resp.ok) return alert('Delete failed');
+        await loadTestimonialsAdmin();
+      }
+    });
+
+    testimonialForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const body = { quote: testiQuote.value, cite: testiCite.value };
+      const isEdit = !!testiId.value;
+      const url = isEdit ? `/api/testimonials/${testiId.value}` : '/api/testimonials';
+      const method = isEdit ? 'PUT' : 'POST';
+      const resp = await fetch(url, { method, headers: { 'Content-Type': 'application/json', 'x-admin-token': getToken() }, body: JSON.stringify(body) });
+      if (!resp.ok) return alert('Save failed');
+      testimonialForm.reset();
+      testiId.value = '';
+      testiCancelBtn.style.display = 'none';
+      await loadTestimonialsAdmin();
+    });
+    testiCancelBtn.addEventListener('click', () => { testimonialForm.reset(); testiId.value=''; testiCancelBtn.style.display='none'; });
+
+    // ----- Members -----
+    async function loadMembers() {
+      const resp = await fetch('/api/members', { headers: { 'x-admin-token': getToken() } });
+      const items = await resp.json();
+      membersTableBody.innerHTML = '';
+      items.forEach(m => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${m.email}</td>
+          <td>${new Date(m.signup_date || m.createdAt).toLocaleString()}</td>
+          <td class="admin-actions">
+            <button class="btn btn-secondary" data-mem-edit="${m.id}">Edit</button>
+            <button class="btn btn-secondary" data-mem-del="${m.id}">Delete</button>
+          </td>`;
+        membersTableBody.appendChild(tr);
+      });
+    }
+
+    membersTableBody.addEventListener('click', async (e) => {
+      const editBtn = e.target.closest('button[data-mem-edit]');
+      const delBtn = e.target.closest('button[data-mem-del]');
+      if (editBtn) {
+        const id = editBtn.getAttribute('data-mem-edit');
+        const list = await (await fetch('/api/members', { headers: { 'x-admin-token': getToken() } })).json();
+        const item = list.find(x => x.id === id);
+        if (!item) return;
+        memberId.value = item.id;
+        memberEmail.value = item.email;
+        memberCancelBtn.style.display = 'inline-block';
+      } else if (delBtn) {
+        const id = delBtn.getAttribute('data-mem-del');
+        if (!confirm('Delete this member?')) return;
+        const resp = await fetch(`/api/members/${id}`, { method: 'DELETE', headers: { 'x-admin-token': getToken() } });
+        if (!resp.ok) return alert('Delete failed');
+        await loadMembers();
+      }
+    });
+
+    memberForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const id = memberId.value;
+      if (!id) return alert('Select a member to edit from the table.');
+      const body = { email: memberEmail.value };
+      const resp = await fetch(`/api/members/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json', 'x-admin-token': getToken() }, body: JSON.stringify(body) });
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        return alert(err.error || 'Save failed');
+      }
+      memberForm.reset();
+      memberId.value = '';
+      memberCancelBtn.style.display = 'none';
+      await loadMembers();
+    });
+    memberCancelBtn.addEventListener('click', () => { memberForm.reset(); memberId.value=''; memberCancelBtn.style.display='none'; });
+    exportMembersBtn.addEventListener('click', () => { window.open('/api/members/export', '_blank'); });
+    loginBtn.addEventListener('click', login);
+    logoutBtn.addEventListener('click', () => { clearToken(); setLoggedInUI(false); });
+    productsTableBody.addEventListener('click', onTableClick);
+    productForm.addEventListener('submit', onSave);
+    cancelEditBtn.addEventListener('click', resetForm);
+
+    (async function init() {
+      if (getToken()) {
+        setLoggedInUI(true);
+        await Promise.all([loadProducts(), loadFaqs(), loadTestimonialsAdmin(), loadMembers()]);
+      }
+    })();
+  </script>
+</body>
+</html>
