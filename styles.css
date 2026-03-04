@@ -932,17 +932,22 @@ img {
 
 /* Responsive */
 @media (max-width: 768px) {
+    .navbar {
+        overflow: visible;
+        height: auto;
+    }
     .nav-links {
         display: none;
         flex-direction: column;
         position: absolute;
-    top: 70px; /* Adjust based on navbar height */
+        top: 70px; /* Adjust based on navbar height */
         left: 0;
         width: 100%;
-    background-color: rgba(20,10,10,0.95);
+        background-color: rgba(20,10,10,0.95);
         padding: 20px;
         box-shadow: 0 5px 10px rgba(0,0,0,0.1);
         text-align: center;
+        z-index: 1100;
     }
 
     .nav-links.active {
