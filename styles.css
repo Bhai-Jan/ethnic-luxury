@@ -348,9 +348,19 @@ img {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid rgba(210,180,140,0.35);
-    background: rgba(255,255,255,0.06);
-    color: var(--text-color);
+    background: #fff;
+    color: #222;
     font-family: var(--font-body);
+}
+
+.filter-controls select:focus {
+    outline: none;
+    border-color: var(--primary-gold);
+}
+
+.filter-controls select option {
+    color: #222;
+    background: #fff;
 }
 
 .price-filters {
