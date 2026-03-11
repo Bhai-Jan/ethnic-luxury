@@ -87,6 +87,7 @@
             <div>
               <label for="type">Type</label>
               <select id="type" required>
+                <option value="" disabled selected>Select type</option>
                 <option value="Sari">Sari</option>
                 <option value="Kaftan">Kaftan</option>
                 <option value="Dashiki">Dashiki</option>
@@ -100,6 +101,7 @@
             <div>
               <label for="region">Region</label>
               <select id="region" required>
+                <option value="" disabled selected>Select region</option>
                 <option value="Pakistan">Pakistan</option>
                 <option value="Afghanistan">Afghanistan</option>
                 <option value="Middle East">Middle East</option>
@@ -347,6 +349,10 @@
 
     async function onSave(e) {
       e.preventDefault();
+      if (!typeEl.value || !regionEl.value) {
+        alert('Please select Type and Region');
+        return;
+      }
       const fd = new FormData();
       fd.append('name', nameEl.value);
       fd.append('price', priceEl.value);
