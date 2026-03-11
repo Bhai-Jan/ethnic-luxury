@@ -25,6 +25,19 @@
     .admin-wrapper label { color: #222; }
     .admin-wrapper input, .admin-wrapper select, .admin-wrapper textarea { color: #222; background-color: #fff; }
     .admin-wrapper .admin-table a { color: #0b5ed7; text-decoration: underline; }
+    @media (max-width: 768px) {
+      .admin-wrapper { padding: 12px; }
+      .topbar { flex-wrap: wrap; gap: 8px; }
+      .admin-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; }
+      .admin-card { padding: 14px; }
+      .admin-table { display: block; width: 100%; overflow-x: auto; }
+    }
+    @media (max-width: 480px) {
+      .admin-wrapper { padding: 10px; }
+      .admin-card { padding: 12px; }
+      .topbar h1 { font-size: 1.4rem; }
+    }
   </style>
 </head>
 <body>
