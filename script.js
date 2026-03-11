@@ -406,6 +406,9 @@ document.addEventListener('DOMContentLoaded', () => {
             backToTopBtn.style.display = 'none';
         }
     });
+    backToTopBtn.addEventListener('click', () => {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
 
     // Club signup
     const newsletterForm = document.getElementById('newsletterForm');
