@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethnic Luxury - Authentic Cultural Fashion</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <header class="navbar">
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <img src="Logo.png" alt="Ethnic Luxury Logo" class="logo-img">
+                <span>Ethnic Luxury</span>
+            </a>
+            <div class="nav-right">
+                <nav>
+                    <ul class="nav-links">
+                        <li><a href="#hero" data-i18n="nav_home">Home</a></li>
+                        <li><a href="#usp" data-i18n="nav_why_us">Why Us</a></li>
+                        <li><a href="#products" data-i18n="nav_shop">Shop</a></li>
+                        <li><a href="#audience" data-i18n="nav_about">About</a></li>
+                        <li><a href="#sustainability" data-i18n="nav_values">Sustainability</a></li>
+                        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+                    </ul>
+                </nav>
+                <button id="lang-toggle" class="lang-btn" aria-label="Switch Language">SV</button>
+                <div class="nav-toggle" aria-label="Toggle navigation" role="button" tabindex="0">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="hero" aria-labelledby="hero-title">
+            <div class="hero-overlay"></div>
+            <div class="container hero-content">
+                <h1 id="hero-title" class="fade-in" data-i18n="hero_title">Rediscover Your Roots with Ethnic Luxury</h1>
+                <p class="slogan fade-in-delay" data-i18n="hero_slogan">Wherever we go, tradition follows.</p>
+                <p class="value-prop fade-in-delay-2" data-i18n="hero_value">We connect people in Sweden to the rich textile heritage of Asia and Africa. Discover authentic, handpicked traditional garments—saris, kaftans, dashikis and more—delivered to your door at fair prices with no unnecessary markups. Founded by a team with roots in Pakistan, Afghanistan, the Middle East and Africa. We offer more than clothes: we offer representation, pride, and a piece of home. No premium prices. Just genuine, accessible garments to wear your culture with pride—every day or on special occasions.</p>
+                <a href="#products" class="btn btn-primary fade-in-delay-3" data-i18n="hero_cta">Explore the Collection</a>
+            </div>
+        </section>
+
+        <!-- USP Section: What Makes Us Different -->
+        <section id="usp" class="section">
+            <div class="container">
+                <h2 class="section-title" data-i18n="usp_title">What Makes Us Different</h2>
+                <div class="values-grid">
+                    <div class="value-item">
+                        <i class="fas fa-hand-holding-heart" aria-hidden="true"></i>
+                        <h3 data-i18n="usp_authentic_title">Curated Authenticity</h3>
+                        <p data-i18n="usp_authentic_desc">Unlike generic marketplaces, every piece is selected by our team with roots in Pakistan, Afghanistan, and Africa to ensure cultural integrity.</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-tag" aria-hidden="true"></i>
+                        <h3 data-i18n="usp_accessible_title">Accessible Authenticity</h3>
+                        <p data-i18n="usp_accessible_desc">We make it easier to find traditional cultural fashion that is often hard to find in Sweden. Through a direct dropshipping model from trusted suppliers, we reduce unnecessary costs and make authentic clothing more accessible. Timeless styles at affordable prices, making cultural pride easier to express.</p>
+                    </div>
+                    <div class="value-item">
+                        <i class="fas fa-tshirt" aria-hidden="true"></i>
+                        <h3 data-i18n="usp_unique_title">Beyond Fast Fashion</h3>
+                        <p data-i18n="usp_unique_desc">Say goodbye to mass-produced trends. Our collection focuses on timeless, traditional garments that tell a story and last for years.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="section" aria-labelledby="products-title">
+            <div class="container">
+                <h2 id="products-title" class="section-title" data-i18n="products_title">Our Collection</h2>
+                
+                <!-- Filters & Search -->
+                <div class="filters-container">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search clothes..." aria-label="Search products">
+                        <button id="searchBtn" aria-label="Search"><i class="fas fa-search" aria-hidden="true"></i></button>
+                    </div>
+                    
+                    <div class="filter-controls">
+                        <select id="typeFilter" aria-label="Filter by type">
+                            <option value="all" data-i18n="filter_all_types">All Types</option>
+                            <option value="Sari">Saris</option>
+                            <option value="Kaftan">Kaftans</option>
+                            <option value="Dashiki">Dashikis</option>
+                            <option value="Abaya">Abayas</option>
+                            <option value="Kurta">Kurtas</option>
+                        </select>
+                        
+                        <select id="regionFilter" aria-label="Filter by region">
+                            <option value="all" data-i18n="filter_all_regions">All Regions</option>
+                            <option value="Pakistan">Pakistan</option>
+                            <option value="Afghanistan">Afghanistan</option>
+                            <option value="Middle East">Middle East</option>
+                            <option value="Africa">Africa</option>
+                            <option value="India">India</option>
+                        </select>
+
+                        <div class="price-filters">
+                            <button class="filter-btn active" data-price="all" data-i18n="price_all">All Prices</button>
+                            <button class="filter-btn" data-price="under500" data-i18n="price_under500">&lt; 500 SEK</button>
+                            <button class="filter-btn" data-price="500to1000" data-i18n="price_500_1000">500-1000 SEK</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Grid -->
+                <div class="product-grid" id="productGrid" role="list">
+                    <!-- Products will be injected via JS -->
+                </div>
+                <p id="noResults" class="no-results" style="display: none;" data-i18n="no_results">No products found matching your criteria.</p>
+            </div>
+        </section>
+
+        <!-- Target Audience -->
+        <section id="audience" class="section bg-light" aria-labelledby="audience-title">
+            <div class="container">
+                <div class="two-column">
+                    <div class="content-text">
+                        <h2 id="audience-title" class="section-title text-left" data-i18n="audience_title">Our Community</h2>
+                        <p data-i18n="audience_text1">Ethnic Luxury is a home for women and men in Sweden who carry the vibrant heritage of Asia and Africa in their hearts. Whether you are looking for a saree for a wedding, a comfortable kurta for Eid, or simply want to express your identity through fashion, we are here for you.</p>
+                        <p data-i18n="audience_text2">Founded by a diverse team with roots in Pakistan, Afghanistan, the Middle East, and Africa, we understand the challenge of finding authentic cultural wear in Scandinavia. We exist to make that search effortless.</p>
+                        <p data-i18n="audience_text3">Ethnic Luxury is not only a store. We want to create a place where people can feel pride in their culture and a sense of belonging.</p>
+                    </div>
+                    <div class="content-image">
+                        <div class="image-box">
+						<img src="grouppic.jpeg" alt="Celebrating Diversity" class="group-img">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sustainability -->
+        <section id="sustainability" class="section bg-dark text-white" aria-labelledby="sustain-title">
+            <div class="container text-center">
+                <h2 id="sustain-title" class="section-title text-gold" data-i18n="sustain_title">Conscious Fashion, Minimal Waste</h2>
+                <div class="max-width-800">
+                    <p data-i18n="sustain_text_1">We are committed to a smarter way of shopping. By using a direct-to-consumer dropshipping model, we avoid large warehouses and unnecessary overproduction.</p>
+                    <br>
+                    <p data-i18n="sustain_text_2">Every item is shipped only after you place an order, which helps reduce textile waste and excess inventory. Instead of producing large quantities, we focus on carefully selected collections of authentic African and Asian clothing, ensuring quality, cultural authenticity, and more responsible consumption.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Testimonials -->
+        <section id="testimonials" class="section" aria-labelledby="testimonials-title">
+            <div class="container">
+                <h2 id="testimonials-title" class="section-title" data-i18n="testimonials_title">What Our Customers Say</h2>
+                <div class="testimonials-grid" id="testimonialsGrid"></div>
+            </div>
+        </section>
+
+        <!-- FAQ Accordion -->
+        <section id="faq" class="section bg-light" aria-labelledby="faq-title">
+            <div class="container">
+                <h2 id="faq-title" class="section-title" data-i18n="faq_title">Frequently Asked Questions</h2>
+                <div class="accordion" id="faqAccordion"></div>
+            </div>
+        </section>
+
+        <!-- CTA Section -->
+        <section id="cta" class="section cta-section" aria-labelledby="cta-title">
+            <div class="container">
+                <h2 id="cta-title" data-i18n="cta_title">Join the Ethnic Luxury Club</h2>
+                <p data-i18n="cta_text">Unlock exclusive access to new arrivals of authentic African and Asian clothing, cultural style inspiration, and 15% off your first purchase.</p>
+                <form class="newsletter-form" id="newsletterForm">
+                    <input type="email" placeholder="Enter your email" required aria-label="Email address">
+                    <button type="submit" class="btn btn-primary" data-i18n="btn_join">Join Now</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="section" aria-labelledby="contact-title">
+            <div class="container">
+                <h2 id="contact-title" class="section-title" data-i18n="contact_title">Contact Us</h2>
+                <div class="contact-wrapper">
+                    <div class="contact-brand">
+                        <h3>Ethnic Luxury</h3>
+                        <p class="contact-slogan" data-i18n="brand_slogan">Wherever we go, tradition follows</p>
+                        <p class="contact-email">Contact us at: <a href="mailto:ethnic@gmial10p.com">ethnic@gmial10p.com</a></p>
+                    </div>
+                    <div>
+                        <h3>Quick Links</h3>
+                        <ul class="quick-links" aria-label="Quick links">
+                            <li><a href="#hero" data-i18n="nav_home">Home</a></li>
+                            <li><a href="#products" data-i18n="nav_shop">Shop</a></li>
+                            <li><a href="#audience" data-i18n="nav_about">About</a></li>
+                            <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+                        </ul>
+                    </div>
+                    <div class="social-links">
+                        <h3 data-i18n="follow_us">Follow Us</h3>
+                        <div class="social-icons">
+                            <a href="#" aria-label="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
+                            <a href="#" aria-label="TikTok"><i class="fab fa-tiktok" aria-hidden="true"></i></a>
+                            <a href="#" aria-label="Facebook"><i class="fab fa-facebook" aria-hidden="true"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="container footer-inner">
+            <div class="footer-brand">Ethnic Luxury</div>
+            <div class="footer-slogan" data-i18n="brand_slogan">Wherever we go, tradition follows</div>
+            <div class="footer-divider"></div>
+            <nav class="footer-links" aria-label="Footer Quick Links">
+                <a href="#hero" data-i18n="nav_home">Home</a>
+                <a href="#products" data-i18n="nav_shop">Shop</a>
+                <a href="#audience" data-i18n="nav_about">About</a>
+                <a href="#contact" data-i18n="nav_contact">Contact</a>
+            </nav>
+            <p>&copy; 2024 Ethnic Luxury. <span data-i18n="rights_reserved">All rights reserved.</span></p>
+            <a href="#" class="back-to-top" id="backToTop" aria-label="Back to Top"><i class="fas fa-arrow-up" aria-hidden="true"></i></a>
+        </div>
+    </footer>
+
+    <!-- Product Modal -->
+    <div id="productModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+                <div class="modal-content">
+            <button class="close-modal" type="button" aria-label="Close modal">&times;</button>
+            <div class="modal-body">
+                <div class="modal-image">
+                    <img id="modalImg" src="data:image/gif;base64,R0lGODlhAQABAAD/ACwAAAAAAQABAAACADs=" alt="Product Image">
+                </div>
+                <div class="modal-info">
+                    <h3 id="modalTitle">Product Title</h3>
+                    <p class="modal-region" id="modalRegion">Region</p>
+                    <p class="modal-desc" id="modalDesc">Description goes here.</p>
+                    <p class="modal-price" id="modalPrice">0 SEK</p>
+                    <div class="modal-actions">
+                        <button class="btn btn-secondary" onclick="document.getElementById('productModal').style.display='none'" data-i18n="continue_shopping">Continue Shopping</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
