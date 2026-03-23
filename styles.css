@@ -232,7 +232,8 @@ img {
 
 /* Hero Section */
 .hero {
-    height: 90vh;
+    min-height: 90vh;
+    padding: 120px 20px 60px;
     background: linear-gradient(rgba(64, 0, 0, 0.65), rgba(10, 0, 0, 0.75)), url('Ethnic main pic.webp');
     background-size: cover;
     background-position: center;
@@ -988,6 +989,18 @@ img {
 
     .hero-content h1 {
         font-size: 2.2rem;
+        margin-top: 20px;
+    }
+
+    .hero-content .value-prop {
+        font-size: 1rem;
+        line-height: 1.6;
+        padding: 0 10px;
+    }
+
+    .hero {
+        padding-top: 140px;
+        min-height: 100vh;
     }
 
     .two-column, .contact-wrapper {
